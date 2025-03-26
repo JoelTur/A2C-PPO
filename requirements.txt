@@ -1,0 +1,7 @@
+torch>=2.0.0
+numpy>=1.21.0
+gymnasium[atari]>=0.29.1
+ale-py>=0.8.1
+scikit-image>=0.21.0
+pyyaml>=6.0.1
+wandb>=0.15.12; python_version >= "3.7"  # Optional dependency for logging 

@@ -1,0 +1,74 @@
+# PPO Configuration File
+
+# Environment Settings
+environment:
+  name: "BreakoutDeterministic-v4"  # Gym environment name
+  input_size: [84, 84]              # Size of processed input frames
+  frame_crop:                       # Frame cropping parameters
+    top: 35
+    bottom: 210
+    left: 0
+    right: 160
+  render_mode: "rgb_array"              # Rendering mode: "human" or "rgb_array"
+
+# Training Parameters
+training:
+  learning_rate: 0.0001
+  gamma: 0.99                       # Discount factor
+  episodes: 5000
+  batch_size: 5
+  epsilon: 0.2                      # PPO clipping parameter
+  alpha: 0.01                       # Entropy coefficient
+  beta: 0.5                         # Value loss coefficient
+  max_iterations: 4                 # Maximum PPO iterations
+  max_updates: 15000               # Maximum training updates
+  kl_limit: 0.015                   # KL divergence limit
+  batch_steps: 2048                 # Steps per batch update
+  save_interval: 500                # Save model every N updates
+  gradient_clip: 0.5                # Gradient clipping value
+
+# Model Architecture
+model:
+  conv_layers:
+    - in_channels: 4
+      out_channels: 32
+      kernel_size: 8
+      stride: 4
+    - in_channels: 32
+      out_channels: 64
+      kernel_size: 4
+      stride: 2
+    - in_channels: 64
+      out_channels: 64
+      kernel_size: 3
+      stride: 1
+  fc_layers:
+    - in_features: 3136
+      out_features: 512
+    - policy_out: null              # Will be set to action_space_size
+    - value_out: 1
+
+# Pretrained Model Settings
+pretrained:
+  use_pretrained: False            # Whether to use a pretrained model
+  model_path: "models/{game}_PPO_WEIGHTS.pth"                  # Path to pretrained model (if null, will use default path)
+  freeze_layers: []                # List of layer names to freeze during training
+  learning_rate_multiplier: 1.0    # Learning rate multiplier for fine-tuning
+
+# Logging and Monitoring
+logging:
+  use_wandb: True                  # Whether to use Weights & Biases for logging
+  wandb:
+    project: "PPO_PONG_BreakoutDeterministic-v4"
+    entity: "neuroori"
+  metrics:
+    - "RUNNING REWARD"
+    - "TOTAL LOSS"
+    - "ENTROPY LOSS"
+    - "VALUES LOSS"
+    - "POLICY LOSS"
+    - "KL_APPROX MEAN"
+
+# File Paths
+paths:
+  model_save: "models/{game}_PPO_WEIGHTS.pth" 
