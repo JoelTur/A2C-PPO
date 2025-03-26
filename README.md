@@ -73,8 +73,8 @@ pretrained:
 logging:
   use_wandb: false                  # Whether to use Weights & Biases for logging
   wandb:
-    project: "PPO_PONG_BreakoutDeterministic-v4"
-    entity: "neuroori"
+    project: ""
+    entity: ""
 ```
 
 ## Usage
